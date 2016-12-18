@@ -1,7 +1,7 @@
 # Introduction
 Le sujet de cette étude est simple : Comment le Big Data peut il m'aider à choisir un film à regarder ce soir ?
 
-En effet, j'ai une grosse vidéothèque de film à la demande chez moi, sauf que je passe souvent autant de temps à me demander quoi voir plutôt que de regarder le film. Je suis sur qu'en fonction des films que j'aime, on pourrait me proposer d'autres films uqe je devrais apprécier.
+En effet, j'ai une grosse vidéothèque de film à la demande chez moi, sauf que je passe souvent autant de temps à me demander quoi voir plutôt que de regarder le film. Je suis sur qu'en fonction des films que j'aime, on pourrait me proposer d'autres films que je devrais apprécier.
 
 Je n'invente rien avec ce projet, les recommandations YouTube ou Netflix le font déjà et le but est davantage de chercher à le faire en utilisant les outils Big Data.
 
@@ -14,6 +14,7 @@ Pour trouver LE film que j'ai envie de mater ce soir, d'habitude c'est :
 Et éventuellement, un truc sortira du lot et je le regarderai, sauf il n'est pas déjà minuit...
 
 Ce projet va se découper en cinq parties :
+
 * Obtenir une liste de noms de films
 * Récupérer des informations sur ces films
 * Charger ses films sur le cluster 
@@ -25,7 +26,9 @@ Ce projet va se découper en cinq parties :
 L'idée ici c'est d'obtenir une liste comprenant le plus de films possibles, afin d'alimenter ma "base de données" de films. Le plus simple pour cela c'est de chercher des listes "Les meilleurs films de l'année XXXX/ de tous les temps"
 
 [Top 1000 films du New York Times](http://www.nytimes.com/ref/movies/1000best.html)
+
 [Top 250 IMDB](http://www.imdb.com/chart/top)
+
 [Top RottenTomatoes par année](https://www.rottentomatoes.com/top/bestofrt/?year=2016)
 
 On pourrait avoir une liste presque exhaustive en utilisant wikipedia qui fournit une liste alphabétique très complète mais on va dire que je veux regarder un bon film (ou en tout cas que des gens ont jugé bon)
@@ -65,6 +68,7 @@ f.write('La classe américaine;1999')
 f.close()
 ```
 Tout d'abord je me suis demandé quels critères je choisissais pour regarder un film :
+
 * De quel genre de films s'agit-il ? (Action, Sci-fi, Humour etc...)
 * Quand est il sorti ?
 * Comment a-t-il été noté ? (Sur IMDB, RottenTomatoes ou autre)
