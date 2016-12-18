@@ -109,4 +109,5 @@ Cet api est très simple d'utilisation, pour la requête `GET http://www.omdbapi
     "Type": "movie",
     "Response": "True"
 
-}```
+}
+```
