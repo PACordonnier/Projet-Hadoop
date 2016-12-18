@@ -67,7 +67,11 @@ for year in range(1996,2017):
 f.write('La classe américaine;1999')
 f.close()
 ```
-Tout d'abord je me suis demandé quels critères je choisissais pour regarder un film :
+
+J'ai donc maintenant un superbe fichier csv de 2000 lignes, la prochaine étape de trouver des informations plus complète sur ces films !
+
+# Partie 2 : Le pleins d'infos
+Tout d'abord je me suis demandé sur quels critères je me basais pour regarder un film :
 
 * De quel genre de films s'agit-il ? (Action, Sci-fi, Humour etc...)
 * Quand est il sorti ?
@@ -76,3 +80,33 @@ Tout d'abord je me suis demandé quels critères je choisissais pour regarder un
 * Qui est l'acteur principal ?
 * De quel pays vient il ?
 
+C'est donc ces données qui vont permettre de catégoriser un film.
+Je vais utiliser l'api [OMDB](https://www.omdbapi.com/) afin d'obtenir ces infos.
+
+Cet api est très simple d'utilisation, pour la requête `GET http://www.omdbapi.com/?t=Zootopia&y=2016&plot=short&r=json` on obtient:
+
+```json
+{
+
+    "Title": "Zootopia",
+    "Year": "2016",
+    "Rated": "PG",
+    "Released": "04 Mar 2016",
+    "Runtime": "108 min",
+    "Genre": "Animation, Adventure, Comedy",
+    "Director": "Byron Howard, Rich Moore, Jared Bush",
+    "Writer": "Byron Howard (story by), Rich Moore (story by), Jared Bush (story by), Jim Reardon (story by), Josie Trinidad (story by), Phil Johnston (story by), Jennifer Lee (story by), Jared Bush (screenplay), Phil Johnston (screenplay)",
+    "Actors": "Ginnifer Goodwin, Jason Bateman, Idris Elba, Jenny Slate",
+    "Plot": "In a city of anthropomorphic animals, a rookie bunny cop and a cynical con artist fox must work together to uncover a conspiracy.",
+    "Language": "English",
+    "Country": "USA",
+    "Awards": "2 wins & 4 nominations.",
+    "Poster": "https://images-na.ssl-images-amazon.com/images/M/MV5BOTMyMjEyNzIzMV5BMl5BanBnXkFtZTgwNzIyNjU0NzE@._V1_SX300.jpg",
+    "Metascore": "78",
+    "imdbRating": "8.1",
+    "imdbVotes": "220,927",
+    "imdbID": "tt2948356",
+    "Type": "movie",
+    "Response": "True"
+
+}```
