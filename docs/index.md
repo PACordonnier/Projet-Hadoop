@@ -208,6 +208,7 @@ Deux types de prédiction sont possibles:
 Dans ce cas, il est nécessaire de "deviner" quels sont les critères qui m'ont fait aimé un film, et de les pondérer à leur juste valeur.
 
 Si on travaille sur la liste des films ayant une bonne note (disons 7/10)
+
 * De quel genre s'agit-il ? Un film possède en général plusieurs genres, se recoupent-ils entre eux ? (Action-SciFi / Drame-SciFi −> Cet homme aime les films de Science-Fiction !)
 * Qui est mon réalisateur favori ?
 * Qui est mon acteur favori ?
