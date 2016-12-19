@@ -176,3 +176,52 @@ Pour des raisons plus pratiques, on peut aussi insérer ces données dans une ba
 Je pense que le plus judicieux serait HBase. On va en effet très peu chercher à modifer cette base, mais on doit néanmoins lui ajouter des données (Un booléen pour savoir si j'ai vu le film et une note sur ce film). Je n'ai néanmoins pas eu le temps d'ajouter dans HBase ces données.
 
 Il semble assez commun de remplir HBase depuis un fichier CSV, comme décrit [ici](http://stackoverflow.com/questions/13906847/loading-csv-data-into-hbase#13935434)
+
+# Partie 4: Noter moi-même ces films
+
+Afin d'obtenir une "tendance", il est nécessaire (mais très pénible) de noter moi-même ces films. En effet un algorithme de prédiction va être nécessaire, mais il lui faut pour cela une entrée. Si je lui dis que j'ai adoré tous les films d'action de 2016, il sere enclin à me proposer d'autres films d'actions...
+
+Certains cinéphiles notent depuis de nombreuses années les films qu'ils regardent sur allociné ou imdb. Si c'était le cas, il est possible de récupérer cette liste et d'en alimenter mes données. Ce n'est malheuresement pas mon cas...
+Je ne vois pas de solutions miracles autrement que de parcourir la liste des films, par exemple avec un REPL, et de lui attribuer une note rapidement. En python cela ressemblerait à ceci:
+
+```python
+with open("list.csv", "r") as csvinput:
+    reader = csvinput.reader()
+    for row in reader:
+    #If the row does not contain a value for the rating of this movie
+        var = raw_input("Rate this movie " + row[0])
+        #if input is empty, I did not see the movie, do not do anything
+        #if input is a valid 0 to 10 number, write it into an other csv
+```
+
+Cette étape est forcément fastidieuse, il serait aussi possible de le faire sous forme d'interface graphique web par exemple.
+
+# Partie 5 : Prédiction
+
+Deux types de prédiction sont possibles:
+
+* Seul mon avis compte
+* L'avis de la communauté est pris en compte
+
+## Je suis seul !
+
+Dans ce cas, il est nécessaire de "deviner" quels sont les critères qui m'ont fait aimé un film, et de les pondérer à leur juste valeur.
+
+Si on travaille sur la liste des films ayant une bonne note (disons 7/10)
+* De quel genre s'agit-il ? Un film possède en général plusieurs genres, se recoupent-ils entre eux ? (Action-SciFi / Drame-SciFi −> Cet homme aime les films de Science-Fiction !)
+* Qui est mon réalisateur favori ?
+* Qui est mon acteur favori ?
+* Plutôt des films récents ou anciens ?
+* Quel film que je n'ai pas vu regroupe le plus de ses critères ?
+
+Une proposition peut ensuite être déduite de ses critères. Il est de plus possible de travailler sur les films que je n'ai PAS aimé, afin d'éviter de proposer les films d'un réalisateur que je ne supporte pas.
+
+## Vive la communauté !
+
+La puissance de la déduction peut sûrement se faire à l'aide d'une communauté d'utilisateurs cinéphiles. Le plus simple serait en effet de "catégoriser" les utilisateurs entre eux, afin de créer des groupes. Des algorithmes comme k-means sont déjà prévus pour cette utilisation. (Ces algorithmes sont déjà en grandes parties implémentées dans Spark par exemple)
+
+# Conclusion
+
+J'aurais tellement aimé faire plus pour ce projet. Je n'ai pas correctement su géré mon temps avec les deadlines de fin d'année. Je pense réellement qu'il est faisable "pas trop difficillement" d'obtenir des tendances dans mes goûts cinématographiques. Google et Netflix le font déjà, pourquoi pas moi ?
+
+Plus sérieusement, j'ai surtout travaillé sur la partie ETL/Code du projet, qui m'est le plus familère. La partie purement Big Data est faible. J'ai encore du mal à me représenter les possibilités offertes par Hadoop. Ce projet consiste en effet en un simple ETL suivi d'un peu de Data Science, alors que les technologies sont très nombreuses et m'aurait permis de faire bien mieux ce que j'ai réalisé ici.
