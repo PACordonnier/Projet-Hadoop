@@ -136,5 +136,6 @@ with open("list.csv", "r") as csvinput:
 ```
 
 Voila la sortie attendue:
+
 > Titre, Année, Genre(s), Réalisateur(s), Acteurs principaux, Pays, Note IMDB
 > Black Hawk Down;2001;['Drama', 'History', 'War'];['Ridley Scott'];['Josh Hartnett', 'Ewan McGregor', 'Tom Sizemore', 'Eric Bana'];['USA', 'UK'];7.7
