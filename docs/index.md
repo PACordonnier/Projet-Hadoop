@@ -6,6 +6,7 @@ En effet, j'ai une grosse vidéothèque de film à la demande chez moi, sauf que
 Je n'invente rien avec ce projet, les recommandations YouTube ou Netflix le font déjà et le but est davantage de chercher à le faire en utilisant les outils Big Data.
 
 Pour trouver LE film que j'ai envie de mater ce soir, d'habitude c'est :
+
 * Regarder les dernières sorties sur l'IMDB ou allociné
 * Regarder des affiches de films
 * Lire des synopsis
@@ -20,6 +21,8 @@ Ce projet va se découper en cinq parties :
 * Charger ses films sur le cluster 
 * Indiquer quels films j'ai déjà regardé
 * Faire de la prédiction et me fournir un résultat
+
+Il serait aussi très intelligent de faire marcher ce service auprès d'un grand nombre d'utilisateurs et ainsi profiter de la puissance de la communauté.
 
 # Partie 1 : Une jolie liste de films 
 
@@ -64,13 +67,13 @@ for year in range(1996,2017):
             f.write('{name};{year}\n'.format(name = match.group(1).encode('utf-8'), year = match.group(2)))
     print('Done !')
 #Comment ce flim a-t-il pu être oublié ??
-f.write('La classe américaine;1999')
+f.write('La classe americaine;1993')
 f.close()
 ```
 
 J'ai donc maintenant un superbe fichier csv de 2000 lignes, la prochaine étape de trouver des informations plus complète sur ces films !
 
-# Partie 2 : Le pleins d'infos
+# Partie 2 : Le plein d'infos
 Tout d'abord je me suis demandé sur quels critères je me basais pour regarder un film :
 
 * De quel genre de films s'agit-il ? (Action, Sci-fi, Humour etc...)
@@ -83,7 +86,7 @@ Tout d'abord je me suis demandé sur quels critères je me basais pour regarder 
 C'est donc ces données qui vont permettre de catégoriser un film.
 Je vais utiliser l'api [OMDB](https://www.omdbapi.com/) afin d'obtenir ces infos.
 
-Cet api est très simple d'utilisation, pour la requête `GET http://www.omdbapi.com/?t=Zootopia&y=2016&plot=short&r=json` on obtient:
+Cette api est très simple d'utilisation, pour la requête `GET http://www.omdbapi.com/?t=Zootopia&y=2016&plot=short&r=json` on obtient:
 
 ```json
 {
@@ -111,3 +114,27 @@ Cet api est très simple d'utilisation, pour la requête `GET http://www.omdbapi
 
 }
 ```
+
+En scriptant ceci, on peut générer un fichier .csv qui contient plein d'infos sur tous les films:
+
+```python
+import json
+import urllib
+import urllib2
+import unicodecsv as csv
+
+with open("list.csv", "r") as csvinput:
+    with open("completeList.csv", "w") as csvoutput:
+        writer = csv.writer(csvoutput, delimiter=";", quotechar="|", quoting=csv.QUOTE_MINIMAL, encoding='utf-8')
+        reader = csv.reader(csvinput, delimiter=";")
+        for row in reader:
+            print "Getting infos for " + row[0]
+            string = urllib.urlencode({'t': row[0].encode('utf-8')})
+            result = json.load(urllib2.urlopen("http://www.omdbapi.com/?{title}&y={year}&plot=short&r=json".format(title=string, year=row[1])))
+            if (result["Response"] == "True"):
+                writer.writerow([result['Title'], result['Year'], result['Genre'].encode('utf-8').split(', '), result['Director'].encode('utf-8').split(', '), result['Actors'].encode('utf-8').split(', '), result['Country'].encode('utf-8').split(', '), result['imdbRating']])
+```
+
+Voila la sortie attendue:
+> Titre, Année, Genre(s), Réalisateur(s), Acteurs principaux, Pays, Note IMDB
+> Black Hawk Down;2001;['Drama', 'History', 'War'];['Ridley Scott'];['Josh Hartnett', 'Ewan McGregor', 'Tom Sizemore', 'Eric Bana'];['USA', 'UK'];7.7
