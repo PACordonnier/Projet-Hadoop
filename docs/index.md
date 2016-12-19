@@ -140,3 +140,39 @@ Voila la sortie attendue:
 > Titre, Année, Genre(s), Réalisateur(s), Acteurs principaux, Pays, Note IMDB
 >
 > Black Hawk Down;2001;['Drama', 'History', 'War'];['Ridley Scott'];['Josh Hartnett', 'Ewan McGregor', 'Tom Sizemore', 'Eric Bana'];['USA', 'UK'];7.7
+
+# Partie 3: Insérer les données dans le cluster
+
+On possède maintenant un fichier .csv contenant pas mal de lignes, on peut déjà le traiter de cette manière avec un simple MapReduce.
+
+```java
+protected void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
+            String line = value.toString();
+            String[] lineSplit = line.split(";");
+            String[] originSplit = lineSplit[3].split(",");
+            for (String s : originSplit) {
+                if (s.equals("")) {
+                    s = "?";
+                }
+                String replace = s.trim().replace("]", "").replace("[", "");
+                word.set(replace.substring(1,replace.length()-1));
+                context.write(word, one);
+            }
+        }
+
+protected void reduce(Text key, Iterable<IntWritable> values, Context context) throws IOException, InterruptedException {
+            int sum = 0;
+            for (IntWritable value : values) {
+                sum += value.get();
+            }
+            context.write(key, new IntWritable(sum));
+        }
+```
+
+On obtient ainsi les réalisateurs présents dans le fichier avec le nombre de films présents dans cette liste, le gagnant est Steven Spielberg !
+Pour ce qui est des pays d'origines, le gagnant est sans suprises les Etats-Unis avec presque 1200 films sur une liste de 1400.
+
+Pour des raisons plus pratiques, on peut aussi insérer ces données dans une base de données HBase ou HiveSQL.
+Je pense que le plus judicieux serait HBase. On va en effet très peu chercher à modifer cette base, mais on doit néanmoins lui ajouter des données (Un booléen pour savoir si j'ai vu le film et une note sur ce film). Je n'ai néanmoins pas eu le temps d'ajouter dans HBase ces données.
+
+Il semble assez commun de remplir HBase depuis un fichier CSV, comme décrit [ici](http://stackoverflow.com/questions/13906847/loading-csv-data-into-hbase#13935434)

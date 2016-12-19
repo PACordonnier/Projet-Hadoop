@@ -1,0 +1,70 @@
+Argentina	3
+Australia	41
+Austria	7
+Bahamas	1
+Belgium	11
+Bosnia and Herzegovina	1
+Brazil	10
+Burkina Faso	1
+Cameroon	1
+Canada	66
+Chile	3
+China	9
+Colombia	1
+Cuba	1
+Czech Republic	4
+Denmark	15
+Dominican Republic	1
+Ecuador	1
+Egypt	1
+Estonia	1
+Finland	10
+France	150
+Germany	121
+Greece	3
+Hong Kong	6
+Hungary	4
+Iceland	2
+India	6
+Iran	4
+Ireland	27
+Israel	6
+Italy	19
+Japan	27
+Jordan	2
+Kazakhstan	1
+Kenya	1
+Kuwait	1
+Latvia	1
+Lithuania	1
+Luxembourg	3
+Mali	1
+Mexico	6
+Mongolia	1
+Morocco	1
+N/A	5
+Netherlands	9
+New Zealand	14
+Nigeria	1
+Norway	9
+Palestine	1
+Peru	2
+Poland	2
+Portugal	4
+Qatar	2
+Romania	1
+Russia	5
+Senegal	1
+Slovenia	1
+South Africa	5
+South Korea	7
+Spain	22
+Sweden	12
+Switzerland	6
+Taiwan	5
+Tunisia	1
+Turkey	2
+UK	280
+USA	1179
+United Arab Emirates	4
+
